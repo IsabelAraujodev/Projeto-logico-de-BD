@@ -60,14 +60,21 @@ INSERT INTO Delivery (idDelivery, idOrder, deliveryStatus, Tracking) VALUES
 
 --para alterar o valor de cada pedido
 
-SELECT PedidoID, SUM(Preco * Quantidade) AS ValorTotal FROM Pedido
-JOIN ItemPedido ON Pedido.PedidoID = ItemPedido.PedidoID
-JOIN Produto ON ItemPedido.ProdutoID = Produto.ProdutoID
-GROUP BY Pedido.PedidoID;
+SELECT idOrder, SUM(Price * Quantity) AS TotalValue FROM Order
+JOIN productOrder ON Order.idOrder = productOrder.idOrder
+JOIN Product ON ItemPedido.idProduct = Product.idProduct
+GROUP BY Order.idOrder;
 
 --para recuperar os detalhes dos pedidos feitos por cada cliente
 
-SELECT ClienteID, PedidoID, DataPedido, ProdutoID, Quantidade
-FROM Pedido
-JOIN ItemPedido ON Pedido.PedidoID = ItemPedido.PedidoID
-WHERE ClienteID = 1;
+SELECT idClient, idOrder, DataPedido, idProduct, Quantity
+FROM Order
+JOIN productOrder ON Order.idOrder = productOrder.idOrder
+WHERE idClient = 1;
+
+--calcula o valor total de cada pedido
+
+SELECT idOrder, SUM(Price * Quantity) AS Value FROM Order
+JOIN productOrder ON Order.idOrder = productOrder.idOrder
+JOIN Produto ON productOrder.idProduct = Product.idProduct
+GROUP BY Order.idOrder;
